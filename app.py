@@ -57,34 +57,34 @@ class Game:
             self.total_time = time.time() - self.time_start
             
             # Calculating Accuracy
-            count = 0
-            for i,c in enumerate(self.word):
+            count = 0 # Initialising the counter for correct typed characters to 0
+            for i,c in enumerate(self.word): 
                 try:
-                    if self.input_text[i] == c:
-                        count += 1
+                    if self.input_text[i] == c: # We compare input_text characters ( i is the index for display text ) with the displayed_text (c)
+                        count += 1 # And we increment the counter by 1
                 except:
                     pass
-            self.accuracy = count/len(self.word)*100
+            self.accuracy = (count/len(self.word))*100 # Accuracy = (Total no. of correct character/total length of the word)*100 in percentage 
             
             # Calculate WPM ( Words Per Minute )
-            self.wpm = len(self.input_text)*60/(5*self.total_time)
+            self.wpm = len(self.input_text)*60/(5*self.total_time) # WPM = (total no. of i/p characters//5)/(total time taken//60) [ We consider a typical word to have 5 characters and take time in seconds ] 
             self.end = True
             print(self.total_time)
 
-            self.results = 'Time:'+str(round(self.total_time)) +" secs Accuracy:"+ str(round(self.accuracy)) + "%" + ' Wpm: ' + str(round(self.wpm))
+            self.results = 'Time:'+str(round(self.total_time)) +" secs Accuracy:"+ str(round(self.accuracy)) + "%" + ' Wpm: ' + str(round(self.wpm)) # We assign a new variable self.results for printing our results
 
             
-            # Draw Icon Image
+            # Draw Icon Image onto the reset button
             self.time_img = pygame.image.load('icon.png')
             self.time_img = pygame.transform.scale(self.time_img,(150,150))
             # screen.blit(self.time_img,(80,320))
-            screen.blit(self.time_img, (self.w/2-75, self.h-140)) # WHY????
+            screen.blit(self.time_img, (self.w/2-75, self.h-140)) 
             self.draw_text(screen, "Reset", self.h-70, 26, (100,100,100))
             
             print(self.results)
             pygame.display.update()
         
-        
+    
     def run(self):
          self.reset_game() # We first reset the variables for our game
             
@@ -94,28 +94,28 @@ class Game:
                 self.screen.fill((0,0,0),(50,250,650,50)) # First attribute being the color and second being the rectangles dimensions
                 pygame.draw.rect(self.screen, self.HEAD_C,(50,250,650,50),2) # Args -> (Surface, Color, Rect, Width) in order
                 # Update the text of user input
-                self.draw_text(self.screen, self.input_text, 274, 18,(250,250,250)) 
+                self.draw_text(self.screen, self.input_text, 274, 18,(250,250,250))  
                 pygame.display.update()
                 
                 # Now we assign a for loop for the events of closing and running operations of the game.
                 for event in pygame.event.get():
                     if event.type == QUIT: # For Closing events
                         self.running = False
-                        sys.exit() # For closing the app.window
-                    elif event.type == pygame.MOUSEBUTTONUP : # For mouse operations
-                        x, y = pygame.mouse.get_pos() # For coordinates of the mouse on the screen
+                        sys.exit() 
+                    elif event.type == pygame.MOUSEBUTTONUP:
+                        x, y = pygame.mouse.get_pos() # For initiating the input box with mouse
                         # position of input box
                         if(x>=50 and x<=650 and y>=250 and y<=300):
                             self.active = True
                             self.input_text = ''
-                            self.time_start = time.time()
+                            self.time_start = time.time() # Amount of time our input_box was active
                         #position of reset box
                         if(x>=310 and x<=510 and y>=390 and self.end):
                             self.reset_game()
-                            x,y = pygame.mouse.get_pos()
-                    elif event.type == pygame.KEYDOWN:
+                            x,y = pygame.mouse.get_pos() # For reseting the game with the mouse 
+                    elif event.type == pygame.KEYDOWN: # KEYDOWN is for testing whether a key is physically pressed down or not
                         if self.active and not self.end:
-                            if event.key == pygame.K_RETURN:
+                            if event.key == pygame.K_RETURN: # K_RETURN checks for ENTER on the keyboard
                                 print(self.input_text)
                                 self.show_results(self.screen)
                                 print(self.results)
@@ -123,15 +123,15 @@ class Game:
                                 self.end = True
                                 
                             elif event.key == pygame.K_BACKSPACE:
-                                self.input_text = self.input_text[:-1]
+                                self.input_text = self.input_text[:-1] # For backspacing letters in our input_text
                             else:
                                 try:
-                                    self.input_text += event.unicode
+                                    self.input_text += event.unicode # For special characters
                                 except:
                                     pass
                 pygame.display.update()
             
-         clock.tick(60)
+         clock.tick(60) # We render the graphic to the screen with 60 times per second
     def reset_game(self):
         self.screen.blit(self.open_img,(0,0)) # (0,0) represents the top left coordinate on the pygame window
         pygame.display.update() 
@@ -151,7 +151,7 @@ class Game:
         if (not self.word): self.reset_game()
         
         # Drawing the heading
-        self.screen.fill((0,0,0)) #(0,0,0) is RGB for Black
+        self.screen.fill((0,0,0)) 
         self.screen.blit(self.bg,(0,0))
         msg = "Twenty One Pilots Quotes" 
         self.draw_text(self.screen, msg, 80, 50, self.HEAD_C)  
