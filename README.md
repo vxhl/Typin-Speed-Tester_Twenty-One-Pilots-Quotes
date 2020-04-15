@@ -13,7 +13,6 @@ To implement the pygame module for the first time.
 Provides you with a random quote from the sentences.txt file which you have to type as fast as you can after tapping the input box in the app window. The output provides us with the accuracy, time taken in seconds and wpm(words per minute).
 
 ## Credits
-Took help from the following sites for implementing this -
 [Pygame Documentation](https://pygame.org/docs)
 
 [Techvidvan](https://techvidvan.com)
